@@ -109,9 +109,17 @@ bot.on('messageCreate', (message) => {
         \`!register\` - Enregistrer le channel pour recevoir des messages.
         \`!tell <message>\` - Envoyer un message avec votre nom d'utilisateur.
         \`!stell <message>\` - Envoyer un message anonymement.
+        \`!url\` - Obtenir l'URL pour afficher les messages.
         \`!help\` - Afficher ce message d'aide.
         `;
         message.channel.send(helpMessage);
+    }
+
+    if (message.content.startsWith('!url')) {
+        const channelId = message.channel.id;
+        const botLink = `${baseUrl}:${port}`;
+        const url = `${botLink}/view/${channelId}`;
+        message.channel.send(`URL pour le channel **${message.channel.name}**: ${url}`);
     }
 });
 
@@ -129,8 +137,10 @@ app.get('/view/:channelId', (req, res) => {
 // make it serve the CSS file in the public folder
 app.use(express.static('public'));
 
-const server = app.listen(3000, () =>
-    console.log('Serveur web démarré sur le port 3000')
+const baseUrl = process.env.BASE_URL || 'http://localhost';
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () =>
+    console.log(`Serveur web démarré sur le port ${port}`)
 );
 
 const wss = new WebSocketServer({ server });
