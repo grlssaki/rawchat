@@ -132,11 +132,13 @@ app.set('view engine', 'ejs');
 
 app.get('/view/:channelId', (req, res) => {
     const channelId = req.params.channelId;
+    const publicSocketUrl = process.env.PUBLIC_SOCKET_URL || null;
     res.render('index', {
         channelId,
         useSecureWs: process.env.USE_SECURE_WS === 'true',
         baseUrl: process.env.BASE_URL || 'localhost',
-        wsPort: process.env.WS_PORT || '5047'
+        wsPort: process.env.WS_PORT || '5047',
+        publicSocketUrl // Pass the public socket URL to the template
     });
 });
 
