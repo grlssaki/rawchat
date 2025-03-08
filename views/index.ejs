@@ -31,7 +31,7 @@
     const baseUrl = "<%= baseUrl %>";
     const wsPort = "<%= wsPort %>";
     const publicSocketUrl = "<%= publicSocketUrl %>";
-    const socketUrl = publicSocketUrl || `${protocol}://${baseUrl}${wsPort === '80' ? '' : `:${wsPort}`}?channelId=${channelId}`;
+    const socketUrl = publicSocketUrl || `${protocol}://${baseUrl}:${wsPort}/?channelId=${channelId}`;
     const socket = new WebSocket(socketUrl);
     const messagesContainer = document.getElementById('messages');
     const errorBanner = document.getElementById('error-banner');
