@@ -117,7 +117,8 @@ bot.on('messageCreate', (message) => {
 
     if (message.content.startsWith('!url')) {
         const channelId = message.channel.id;
-        const botLink = `${baseUrl}:${port}`;
+        const protocol = useSecureWs ? 'wss' : 'ws';
+        const botLink = `${protocol}://${baseUrl}${wsPort === 80 ? '' : `:${wsPort}`}`;
         const url = `${botLink}/view/${channelId}`;
         message.channel.send(`URL pour le channel **${message.channel.name}**: ${url}`);
     }
@@ -138,12 +139,16 @@ app.get('/view/:channelId', (req, res) => {
 app.use(express.static('public'));
 
 const baseUrl = process.env.BASE_URL || 'http://localhost';
-const port = process.env.PORT || 3000;
-const server = app.listen(port, () =>
-    console.log(`Serveur web démarré sur le port ${port}`)
+const webviewPort = process.env.WEBVIEW_PORT || 80;
+const wsPort = process.env.WS_PORT || 5047;
+const useSecureWs = process.env.USE_SECURE_WS === 'true';
+
+const server = app.listen(webviewPort, () =>
+    console.log(`Serveur web démarré sur le port ${webviewPort}`)
 );
 
-const wss = new WebSocketServer({ server });
+const wss = new WebSocketServer({ port: wsPort });
+console.log(`Serveur WebSocket démarré sur le port ${wsPort}`);
 
 wss.on('connection', (ws, req) => {
     const params = new URLSearchParams(req.url.split('?')[1]);
