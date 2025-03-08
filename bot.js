@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const express = require('express');
-const { WebSocketServer } = require('ws');
+const { WebSocketServer, WebSocket } = require('ws'); // Import WebSocket as well
+const http = require('http'); // Import the http module
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -118,7 +119,7 @@ bot.on('messageCreate', (message) => {
     if (message.content.startsWith('!url')) {
         const channelId = message.channel.id;
         const protocol = useSecureWs ? 'https' : 'http';
-        const botLink = `${protocol}://${baseUrl}${webviewPort === 80 ? '' : `:${webviewPort}`}`;
+        const botLink = `${protocol}://${baseUrl}${port === 80 ? '' : `:${port}`}`;
         const url = `${botLink}/view/${channelId}`;
         message.channel.send(`URL pour le channel **${message.channel.name}**: ${url}`);
     }
@@ -130,6 +131,8 @@ bot.login(process.env.BOT_TOKEN);
 const app = express();
 app.set('view engine', 'ejs');
 
+app.use(express.static('public'));
+
 app.get('/view/:channelId', (req, res) => {
     const channelId = req.params.channelId;
     const publicSocketUrl = process.env.PUBLIC_SOCKET_URL || null;
@@ -137,27 +140,21 @@ app.get('/view/:channelId', (req, res) => {
         channelId,
         useSecureWs: process.env.USE_SECURE_WS === 'true',
         baseUrl: process.env.BASE_URL || 'localhost',
-        wsPort: process.env.WS_PORT || '443',
-        publicSocketUrl // Pass the public socket URL to the template
+        wsPort: process.env.PORT || '80', // Default to 80
     });
 });
 
-// make it serve the CSS file in the public folder
-app.use(express.static('public'));
-
 const baseUrl = process.env.BASE_URL || 'localhost';
-const webviewPort = process.env.WEBVIEW_PORT || 80;
-const wsPort = process.env.WS_PORT || 443;
+const port = process.env.PORT || 80; // Default to 80
 const useSecureWs = process.env.USE_SECURE_WS === 'true';
 
-console.log(`Démarre le serveur web sur le port ${webviewPort} (adresse: ${baseUrl})`);
+console.log(`Démarre le serveur web sur le port ${port} (adresse: ${baseUrl})`);
 
-const server = app.listen(webviewPort, () =>
-    console.log(`Serveur web démarré sur le port ${webviewPort}`)
-);
+// Create an HTTP server
+const server = http.createServer(app);
 
-const wss = new WebSocketServer({ port: wsPort });
-console.log(`Serveur WebSocket démarré sur le port ${wsPort}`);
+// Initialize WebSocket server using the HTTP server
+const wss = new WebSocketServer({ noServer: true }); // Don't create a separate server
 
 wss.on('connection', (ws, req) => {
     const params = new URLSearchParams(req.url.split('?')[1]);
@@ -178,3 +175,17 @@ wss.on('connection', (ws, req) => {
         console.log(`Client déconnecté du channel ID: ${channelId}`);
     });
 });
+
+// Handle the HTTP server upgrade to WebSocket
+server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, ws => {
+        wss.emit('connection', ws, request);
+    });
+});
+
+// Start the HTTP server
+server.listen(port, () =>
+    console.log(`Serveur web démarré sur le port ${port}`)
+);
+
+console.log(`Serveur WebSocket démarré sur le port ${port}`);

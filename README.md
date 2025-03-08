@@ -38,15 +38,13 @@ To install and run RawChat locally, follow these steps:
     ```env
     BOT_TOKEN=your_discord_bot_token
     BASE_URL=localhost
-    WEBVIEW_PORT=80
-    WS_PORT=443
+    PORT=80
     USE_SECURE_WS=false
     ```
 
     Replace `your_discord_bot_token` with your Discord bot token.
     You can remove the `BASE_URL` and `PORT` variables if you don't need them, they're pretty much optional for local development but you might want to change the port if you deploy the app.
     If you want to use a secure WebSocket connection, set `USE_SECURE_WS=true`.
-    If your public URL for the websocket is different from the one you use to access the webview, you can set `PUBLIC_SOCKET_URL` to the public URL. (for example, `wss://rawchat-railway.app:1337`)
 
 5. Start the development server:
 
