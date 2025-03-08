@@ -118,7 +118,7 @@ bot.on('messageCreate', (message) => {
     if (message.content.startsWith('!url')) {
         const channelId = message.channel.id;
         const protocol = useSecureWs ? 'https' : 'http';
-        const botLink = `${protocol}://${baseUrl}${wsPort === 80 ? '' : `:${wsPort}`}`;
+        const botLink = `${protocol}://${baseUrl}${webviewPort ? `:${webviewPort}` : ''}`;
         const url = `${botLink}/view/${channelId}`;
         message.channel.send(`URL pour le channel **${message.channel.name}**: ${url}`);
     }
@@ -137,7 +137,7 @@ app.get('/view/:channelId', (req, res) => {
         channelId,
         useSecureWs: process.env.USE_SECURE_WS === 'true',
         baseUrl: process.env.BASE_URL || 'localhost',
-        wsPort: process.env.WS_PORT || '5047',
+        wsPort: process.env.WS_PORT || '443',
         publicSocketUrl // Pass the public socket URL to the template
     });
 });
@@ -145,10 +145,12 @@ app.get('/view/:channelId', (req, res) => {
 // make it serve the CSS file in the public folder
 app.use(express.static('public'));
 
-const baseUrl = process.env.BASE_URL || 'http://localhost';
+const baseUrl = process.env.BASE_URL || 'localhost';
 const webviewPort = process.env.WEBVIEW_PORT || 80;
-const wsPort = process.env.WS_PORT || 5047;
+const wsPort = process.env.WS_PORT || 443;
 const useSecureWs = process.env.USE_SECURE_WS === 'true';
+
+console.log(`Démarre le serveur web sur le port ${webviewPort} (adresse: ${baseUrl})`);
 
 const server = app.listen(webviewPort, () =>
     console.log(`Serveur web démarré sur le port ${webviewPort}`)
