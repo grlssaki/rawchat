@@ -135,7 +135,6 @@ app.use(express.static('public'));
 
 app.get('/view/:channelId', (req, res) => {
     const channelId = req.params.channelId;
-    const publicSocketUrl = process.env.PUBLIC_SOCKET_URL || null;
     res.render('index', {
         channelId,
         useSecureWs: process.env.USE_SECURE_WS === 'true',
