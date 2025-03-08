@@ -76,6 +76,25 @@ To install and run RawChat locally, follow these steps:
 
 You can get instructions on how to use the bot by typing `!help` in the chat.
 
+## Deploying (on Railway)
+
+1. Create a new Railway project on the website and link it to your forked repository.
+2. Add the following environment variables to the Railway project:
+
+    ```env
+    BASE_URL="${{RAILWAY_PUBLIC_DOMAIN}}"
+    BOT_TOKEN="your_discord_bot_token"
+    HIDE_WEBVIEW_PORT="true"
+    HIDE_WS_PORT="true"
+    USE_SECURE_WS="true"
+    ```
+
+    Replace `your_discord_bot_token` with your Discord bot token.
+3. Deploy the project.
+4. Once the deployment is complete, you can access the application at the provided URL and run commands on the Discord bot.
+
+> [!WARNING] The Railway public domain should be enabled in your deployment settings under Public Networking.
+
 ## Usage
 
 Once the development server is running, you can access the application at `http://localhost:3000`. Register a new account or log in with an existing account to start chatting.
