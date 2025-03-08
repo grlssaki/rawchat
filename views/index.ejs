@@ -29,8 +29,9 @@
     const channelId = "<%= channelId %>";
     const protocol = "<%= useSecureWs ? 'wss' : 'ws' %>";
     const baseUrl = "<%= baseUrl %>";
+    const hideWebsocketPort = "<%= hideWebsocketPort %>";
     const wsPort = "<%= wsPort %>";
-    const socketUrl = `${protocol}://${baseUrl}${wsPort == '80' ? "" : `:${wsPort}`}/?channelId=${channelId}`;
+    const socketUrl = `${protocol}://${baseUrl}${(wsPort == '80' || hideWebsocketPort) ? "" : `:${wsPort}`}/?channelId=${channelId}`;
     const socket = new WebSocket(socketUrl);
     const messagesContainer = document.getElementById('messages');
     const errorBanner = document.getElementById('error-banner');

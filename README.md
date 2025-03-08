@@ -46,6 +46,7 @@ To install and run RawChat locally, follow these steps:
     You can remove the `BASE_URL` and `PORT` variables if you don't need them, they're pretty much optional for local development but you might want to change the port if you deploy the app.
     If you want to use a secure WebSocket connection, set `USE_SECURE_WS=true`.
     If you want the port to be hidden when showing the webview URL using the Discord command, set `HIDE_WEBVIEW_PORT=true`.
+    If you want the port to be hidden when connecting to the WebSocket server from the webview, set `HIDE_WS_PORT=true`.
 
 5. Start the development server:
 

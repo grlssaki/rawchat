@@ -119,7 +119,6 @@ bot.on('messageCreate', (message) => {
     if (message.content.startsWith('!url')) {
         const channelId = message.channel.id;
         const protocol = useSecureWs ? 'https' : 'http';
-        const hideWebViewPort = process.env.HIDE_WEBVIEW_PORT === 'true';
         const botLink = `${protocol}://${baseUrl}${(port === 80 || hideWebViewPort) ? '' : `:${port}`}`;
         const url = `${botLink}/view/${channelId}`;
         message.channel.send(`URL pour le channel **${message.channel.name}**: ${url}`);
@@ -141,12 +140,14 @@ app.get('/view/:channelId', (req, res) => {
         useSecureWs: process.env.USE_SECURE_WS === 'true',
         baseUrl: process.env.BASE_URL || 'localhost',
         wsPort: process.env.PORT || '80', // Default to 80
+        hideWebsocketPort: process.env.HIDE_WS_PORT === 'true',
     });
 });
 
 const baseUrl = process.env.BASE_URL || 'localhost';
 const port = process.env.PORT || 80; // Default to 80
 const useSecureWs = process.env.USE_SECURE_WS === 'true';
+const hideWebViewPort = process.env.HIDE_WEBVIEW_PORT === 'true';
 
 console.log(`Démarre le serveur web sur le port ${port} (adresse: ${baseUrl})`);
 
