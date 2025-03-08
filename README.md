@@ -93,7 +93,8 @@ You can get instructions on how to use the bot by typing `!help` in the chat.
 3. Deploy the project.
 4. Once the deployment is complete, you can access the application at the provided URL and run commands on the Discord bot.
 
-> [!WARNING] The Railway public domain should be enabled in your deployment settings under Public Networking.
+> [!WARNING]
+> The Railway public domain should be enabled in your deployment settings under Public Networking.
 
 ## Usage
 
