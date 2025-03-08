@@ -30,7 +30,7 @@
     const protocol = "<%= useSecureWs ? 'wss' : 'ws' %>";
     const baseUrl = "<%= baseUrl %>";
     const wsPort = "<%= wsPort %>";
-    const socketUrl = `${protocol}://${baseUrl}:${wsPort}/?channelId=${channelId}`;
+    const socketUrl = `${protocol}://${baseUrl}${wsPort == '80' ? "" : `:${wsPort}`}/?channelId=${channelId}`;
     const socket = new WebSocket(socketUrl);
     const messagesContainer = document.getElementById('messages');
     const errorBanner = document.getElementById('error-banner');
