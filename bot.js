@@ -119,7 +119,8 @@ bot.on('messageCreate', (message) => {
     if (message.content.startsWith('!url')) {
         const channelId = message.channel.id;
         const protocol = useSecureWs ? 'https' : 'http';
-        const botLink = `${protocol}://${baseUrl}${port === 80 ? '' : `:${port}`}`;
+        const hideWebViewPort = process.env.HIDE_WEBVIEW_PORT === 'true';
+        const botLink = `${protocol}://${baseUrl}${(port === 80 || hideWebViewPort) ? '' : `:${port}`}`;
         const url = `${botLink}/view/${channelId}`;
         message.channel.send(`URL pour le channel **${message.channel.name}**: ${url}`);
     }
