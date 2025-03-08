@@ -132,7 +132,12 @@ app.set('view engine', 'ejs');
 
 app.get('/view/:channelId', (req, res) => {
     const channelId = req.params.channelId;
-    res.render('index', { channelId });
+    res.render('index', {
+        channelId,
+        useSecureWs: process.env.USE_SECURE_WS === 'true',
+        baseUrl: process.env.BASE_URL || 'localhost',
+        wsPort: process.env.WS_PORT || '5047'
+    });
 });
 
 // make it serve the CSS file in the public folder

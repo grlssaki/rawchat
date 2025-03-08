@@ -6,15 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rawchat</title>
     <link rel="stylesheet" href="/styles.css">
+    <style>
+        #error-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: red;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body>
     <div id="messages"></div>
+    <div id="error-banner">WebSocket connexion lost!</div>
 </body>
 <script>
     const channelId = "<%= channelId %>";
-    const socket = new WebSocket(`ws://${window.location.hostname}:3000?channelId=${channelId}`);
+    const protocol = "<%= useSecureWs ? 'wss' : 'ws' %>";
+    const baseUrl = "<%= baseUrl %>";
+    const wsPort = "<%= wsPort %>";
+    const socket = new WebSocket(`${protocol}://${baseUrl}${wsPort === '80' ? '' : `:${wsPort}`}?channelId=${channelId}`);
     const messagesContainer = document.getElementById('messages');
+    const errorBanner = document.getElementById('error-banner');
 
     socket.addEventListener('message', (event) => {
         const messageData = JSON.parse(event.data);
@@ -90,10 +108,12 @@
 
     socket.addEventListener('open', () => {
         console.log('Connexion WebSocket établie.');
+        errorBanner.style.display = 'none';
     });
 
     socket.addEventListener('close', () => {
         console.log('Connexion WebSocket fermée.');
+        errorBanner.style.display = 'block';
     });
 </script>
 
