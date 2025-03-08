@@ -37,7 +37,7 @@ To install and run RawChat locally, follow these steps:
 
     ```env
     BOT_TOKEN=your_discord_bot_token
-    BASE_URL=http://localhost
+    BASE_URL=localhost
     WEBVIEW_PORT=80
     WS_PORT=5047
     USE_SECURE_WS=false
