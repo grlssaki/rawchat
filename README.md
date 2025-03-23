@@ -3,8 +3,11 @@
 RawChat is a simple application that allows users to communicate in real-time using an overlay on OBS linked to Discord.
 Inspired by Cacabox's Livechat, demo available [here](https://www.youtube.com/watch?v=Qs4zvCv1Ir8).
 
+> [!CAUTION]
+> If any member of the Cacabox wants this project removed from GitHub, feel free to reach out at krz@sent.com or [@krz0001](https://x.com/krz0001) on Twitter! This was done as a passion project but I don't want to undermine the concept behind your idea.
+
 ## Project demo
->
+
 > [!NOTE]  
 > Demo is a live feed from OBS.
 
