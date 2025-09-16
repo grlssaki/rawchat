@@ -81,19 +81,22 @@ body {
     margin-top: auto;
     margin-bottom: 2vh;
 
-    /* Dynamic font sizing */
+    /* Taille dynamique */
     font-size: min(8vw, calc(15vh / (0.5 + (var(--char-length, 0) / 40))));
     line-height: 1.2;
 
-    /* Nouvelle police + style */
+    /* Police comme l'image */
     font-family: Impact, Charcoal, sans-serif;
+    font-weight: bold;
     color: white;
-    -webkit-text-stroke: 1px black;
+
+    /* Contour noir épais */
+    -webkit-text-stroke: 3px black;
     text-shadow:
-        1px 1px 0 black,
-        -1px 1px 0 black,
-        1px -1px 0 black,
-        -1px -1px 0 black;
+        2px 2px 0 black,
+        -2px 2px 0 black,
+        2px -2px 0 black,
+        -2px -2px 0 black;
 
     white-space: normal;
     overflow-wrap: break-word;
