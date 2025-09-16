@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Impact;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -59,7 +59,7 @@ body {
 }
 
 .username {
-    font-family: 'Cooper Black', 'Comic Sans MS', cursive, sans-serif;
+    font-family: Impact;
     font-style: italic;
     font-size: 5vh;
     color: white;
@@ -92,7 +92,7 @@ body {
     - The divisor of 40 can be adjusted to fine-tune the scaling rate
     */
 
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact;
     color: black;
     -webkit-text-stroke: 0.15em black;
     -webkit-text-fill-color: white;
