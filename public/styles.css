@@ -81,24 +81,20 @@ body {
     margin-top: auto;
     margin-bottom: 2vh;
 
-    /* Dynamic font sizing based on content length */
+    /* Dynamic font sizing */
     font-size: min(8vw, calc(15vh / (0.5 + (var(--char-length, 0) / 40))));
     line-height: 1.2;
-    /*
-    The formula will:
-    - Start with large text for short messages
-    - Gradually decrease font size as message length increases
-    - Keep text within 15% viewport height for optimal viewing
-    - The divisor of 40 can be adjusted to fine-tune the scaling rate
-    */
 
-    font-family: Arial, sans-serif;
-    color: black;
-    -webkit-text-stroke: 0;
-    -webkit-text-fill-color: black;
-    text-shadow: none;
+    /* Nouvelle police + style */
+    font-family: Impact, Charcoal, sans-serif;
+    color: white;
+    -webkit-text-stroke: 1px black;
+    text-shadow:
+        1px 1px 0 black,
+        -1px 1px 0 black,
+        1px -1px 0 black,
+        -1px -1px 0 black;
 
-    /* Enable text wrapping */
     white-space: normal;
     overflow-wrap: break-word;
     word-wrap: break-word;
