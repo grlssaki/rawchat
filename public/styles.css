@@ -92,7 +92,7 @@ body {
     - The divisor of 40 can be adjusted to fine-tune the scaling rate
     */
 
-    font-family: Impact;
+    font-family: Arial, sans-serif;
     color: black;
     -webkit-text-stroke: 0.15em black;
     -webkit-text-fill-color: white;
